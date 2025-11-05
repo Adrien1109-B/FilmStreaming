@@ -1,197 +1,95 @@
-
-<!doctype html>
+<!DOCTYPE html>
 <html lang="fr">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Stream — A+T</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FilmStreaming</title>
 <style>
-  :root{ --bg:#07121a; --card:#0f1b25; --accent:#e83a6a; --muted:#9fb0bf;}
-  *{box-sizing:border-box}
-  body{ margin:0; font-family:Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial; background:linear-gradient(180deg,#07121a,#021018); color:#e6f1f5; }
-  header{display:flex;align-items:center;justify-content:space-between;padding:14px 22px;}
-  .brand{display:flex;gap:12px;align-items:center}
-  .logo{width:46px;height:46px;border-radius:8px;background:linear-gradient(135deg,var(--accent),#ff7aa8);display:flex;align-items:center;justify-content:center;font-weight:700;color:#fff}
-  .hero{max-width:1100px;margin:18px auto;padding:12px}
-  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:18px}
-  .card{background:var(--card);border-radius:10px;overflow:hidden;cursor:pointer;position:relative;transition:transform .18s ease}
-  .card:hover{transform:translateY(-6px)}
-  .thumb{width:100%;height:240px;object-fit:cover;display:block}
-  .meta{padding:12px}
-  .play-badge{position:absolute;left:12px;top:12px;background:rgba(0,0,0,0.45);padding:10px 12px;border-radius:999px;color:#fff;font-weight:700;display:flex;gap:8px;align-items:center}
-  /* viewer */
-  .viewer{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,0.7);z-index:200;padding:18px}
-  .viewer.show{display:flex}
-  .viewer-inner{width:95%;max-width:1000px;background:#07121a;border-radius:12px;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,0.7)}
-  .viewer-img{width:100%;height:calc(100% - 96px);object-fit:contain;background:#08121a;display:block}
-  .viewer-footer{padding:14px;display:flex;align-items:center;justify-content:space-between;gap:10px}
-  .reveal-btn{background:linear-gradient(90deg,var(--accent),#ff7aa8);border:0;padding:10px 14px;border-radius:8px;color:white;font-weight:700;cursor:pointer}
-  .close-btn{background:transparent;border:0;color:var(--muted);cursor:pointer}
-  /* progress */
-  .progress-wrap{height:10px;background:rgba(255,255,255,0.06);border-radius:999px;overflow:hidden;flex:1;margin-right:12px}
-  .progress-bar{height:100%;width:0%;background:linear-gradient(90deg,var(--accent),#ff7aa8);transition:width .2s linear}
-  /* hidden text overlay */
-  .text-overlay{position:absolute;left:0;right:0;top:0;bottom:96px;display:flex;align-items:center;justify-content:center;pointer-events:none}
-  .bubble{background:rgba(0,0,0,0.55);padding:18px 22px;border-radius:12px;color:white;font-size:28px;font-weight:800;display:none}
-  .bubble.show{display:block; animation:pop .45s ease}
-  @keyframes pop { from { transform:scale(.9); opacity:0 } to { transform:scale(1); opacity:1 } }
-  @media (max-width:640px){ .thumb{height:160px} .viewer-img{height:calc(100% - 120px)} .bubble{font-size:20px} }
+body {
+  margin:0;
+  font-family: Arial, sans-serif;
+  background: #0b111a;
+  color: #fff;
+}
+header {
+  padding: 15px 25px;
+  font-size: 24px;
+  font-weight: bold;
+  background: #141c2a;
+}
+main {
+  padding: 20px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill,minmax(160px,1fr));
+  gap: 20px;
+}
+.card {
+  position: relative;
+  cursor: default;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.4);
+  transition: transform 0.2s;
+}
+.card img {
+  width: 100%;
+  display: block;
+}
+.card:hover {
+  transform: translateY(-5px);
+}
+/* Clé : film cliquable */
+.card.clickable {
+  cursor: pointer;
+}
 </style>
 </head>
 <body>
 
-<header>
-  <div class="brand">
-    <div class="logo">A+T</div>
-    <div>
-      <div style="font-weight:700">StreamLike</div>
-      <div style="font-size:12px;color:var(--muted)">Films • Séries • Surprises</div>
-    </div>
+<header>FilmStreaming - Recommandations</header>
+
+<main>
+  <div class="card">
+    <img src="thumb-fake1.jpg" alt="Film 1">
   </div>
-  <nav style="color:var(--muted);font-size:14px">Accueil • Tendances • Ma liste</nav>
-</header>
-
-<main class="hero">
-  <div style="margin-bottom:12px"><strong>Recommandé pour toi</strong></div>
-
-  <div class="grid">
-    <div class="card" id="movie-card" tabindex="0" aria-label="Lancer A+T">
-      <div class="play-badge">▶ Lecture</div>
-      <img src="thumb-AplusT.jpg" alt="A+T - film" class="thumb" />
-      <div class="meta">
-        <h3 style="margin:0 0 6px 0">A + T</h3>
-        <p style="margin:0;color:var(--muted)">Durée : 0:30 • Genre : Surprise romantique</p>
-      </div>
-    </div>
+  <div class="card">
+    <img src="thumb-fake2.jpg" alt="Film 2">
+  </div>
+  <div class="card clickable" id="myMovie">
+    <img src="thumb-AplusT.jpg" alt="A+T">
+  </div>
+  <div class="card">
+    <img src="thumb-fake3.jpg" alt="Film 3">
   </div>
 </main>
 
-<!-- viewer -->
-<div class="viewer" id="viewer" role="dialog" aria-hidden="true">
-  <div class="viewer-inner" role="document" style="position:relative">
-    <div class="text-overlay" id="textOverlay">
-      <div class="bubble" id="bubbleText">Veux-tu être mon copain ? ❤️</div>
-    </div>
-
-    <img src="doodle-full.png" alt="Doodle secret" class="viewer-img" id="viewerImg" />
-
-    <div class="viewer-footer">
-      <div style="display:flex;align-items:center;gap:10px;flex:1">
-        <div class="progress-wrap" aria-hidden="true">
-          <div class="progress-bar" id="progressBar"></div>
-        </div>
-        <div style="min-width:110px;font-size:13px;color:var(--muted)" id="statusText">Lecture en cours...</div>
-      </div>
-
-      <div style="display:flex;gap:8px;align-items:center">
-        <button class="reveal-btn" id="instantReveal">Révéler maintenant</button>
-        <button class="close-btn" id="closeBtn">Fermer</button>
-      </div>
-    </div>
-  </div>
-</div>
-
 <script>
-  const card = document.getElementById('movie-card');
-  const viewer = document.getElementById('viewer');
-  const closeBtn = document.getElementById('closeBtn');
-  const progressBar = document.getElementById('progressBar');
-  const statusText = document.getElementById('statusText');
-  const bubbleText = document.getElementById('bubbleText');
-  const textOverlay = document.getElementById('textOverlay');
-  const instantReveal = document.getElementById('instantReveal');
+const myMovie = document.getElementById('myMovie');
+myMovie.addEventListener('click', () => {
+  // ouvrir le doodle en plein écran
+  const overlay = document.createElement('div');
+  overlay.style.position = 'fixed';
+  overlay.style.top = 0;
+  overlay.style.left = 0;
+  overlay.style.width = '100vw';
+  overlay.style.height = '100vh';
+  overlay.style.background = 'rgba(0,0,0,0.85)';
+  overlay.style.display = 'flex';
+  overlay.style.alignItems = 'center';
+  overlay.style.justifyContent = 'center';
+  overlay.style.zIndex = 1000;
 
-  let progress = 0;
-  let progInterval = null;
-  const durationSec = 6; // temps de suspense en secondes
+  const img = document.createElement('img');
+  img.src = 'doodle-full.png';
+  img.style.maxWidth = '90%';
+  img.style.maxHeight = '90%';
+  img.style.borderRadius = '10px';
+  overlay.appendChild(img);
 
-  card.addEventListener('click', openViewer);
-  card.addEventListener('keypress', e => { if(e.key==='Enter' || e.key===' ') openViewer(); });
-
-  function openViewer(){
-    viewer.classList.add('show');
-    viewer.setAttribute('aria-hidden','false');
-    bubbleText.classList.remove('show');
-    statusText.textContent = 'Lecture en cours...';
-    progressBar.style.width = '0%';
-    progress = 0;
-    startProgress();
-    playPing(); // son initial
-    window.scrollTo(0,0);
-  }
-
-  closeBtn.addEventListener('click', closeViewer);
-  viewer.addEventListener('click', (e)=> { if(e.target === viewer) closeViewer(); });
-
-  function closeViewer(){
-    viewer.classList.remove('show');
-    viewer.setAttribute('aria-hidden','true');
-    stopProgress();
-  }
-
-  function startProgress(){
-    stopProgress();
-    const stepMs = 100;
-    const steps = (durationSec*1000)/stepMs;
-    progInterval = setInterval(()=>{
-      progress++;
-      const pct = Math.min(100, Math.round((progress/steps)*100));
-      progressBar.style.width = pct + '%';
-      if(pct>=100){
-        revealMessage();
-        stopProgress();
-      }
-    }, stepMs);
-  }
-
-  function stopProgress(){ if(progInterval) { clearInterval(progInterval); progInterval = null; } }
-
-  function revealMessage(){
-    statusText.textContent = 'Révélation';
-    bubbleText.classList.add('show');
-    playRevealSound();
-  }
-
-  instantReveal.addEventListener('click', ()=>{
-    stopProgress();
-    progressBar.style.width = '100%';
-    revealMessage();
-  });
-
-  // Petit son "ping" fait avec WebAudio (pas besoin de fichier)
-  function playPing(){
-    try{
-      const ctx = new (window.AudioContext || window.webkitAudioContext)();
-      const o = ctx.createOscillator();
-      const g = ctx.createGain();
-      o.type = 'sine';
-      o.frequency.setValueAtTime(880, ctx.currentTime);
-      g.gain.setValueAtTime(0.0001, ctx.currentTime);
-      g.gain.exponentialRampToValueAtTime(0.05, ctx.currentTime + 0.01);
-      o.connect(g); g.connect(ctx.destination);
-      o.start();
-      o.stop(ctx.currentTime + 0.06);
-    }catch(e){}
-  }
-
-  function playRevealSound(){
-    try{
-      const ctx = new (window.AudioContext || window.webkitAudioContext)();
-      const o1 = ctx.createOscillator(), o2 = ctx.createOscillator();
-      const g = ctx.createGain();
-      o1.type = 'sine'; o2.type = 'triangle';
-      o1.frequency.setValueAtTime(440, ctx.currentTime);
-      o2.frequency.setValueAtTime(660, ctx.currentTime);
-      g.gain.setValueAtTime(0.0001, ctx.currentTime);
-      g.gain.exponentialRampToValueAtTime(0.08, ctx.currentTime + 0.02);
-      o1.connect(g); o2.connect(g); g.connect(ctx.destination);
-      o1.start(); o2.start();
-      o1.stop(ctx.currentTime + 0.28); o2.stop(ctx.currentTime + 0.28);
-    }catch(e){}
-  }
-
-  // Option : faire que la question apparaisse immédiatement au click
-  // pour l'activer automatiquement, appelle revealMessage() dans openViewer() au lieu de startProgress()
+  // clic pour fermer
+  overlay.addEventListener('click', () => document.body.removeChild(overlay));
+  document.body.appendChild(overlay);
+});
 </script>
 
 </body>
