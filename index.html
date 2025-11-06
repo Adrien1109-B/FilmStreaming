@@ -1,97 +1,55 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>FilmStreaming</title>
-<style>
-body {
-  margin:0;
-  font-family: Arial, sans-serif;
-  background: #0b111a;
-  color: #fff;
-}
-header {
-  padding: 15px 25px;
-  font-size: 24px;
-  font-weight: bold;
-  background: #141c2a;
-}
-main {
-  padding: 20px;
-  display: grid;
-  grid-template-columns: repeat(auto-fill,minmax(160px,1fr));
-  gap: 20px;
-}
-.card {
-  position: relative;
-  cursor: default;
-  border-radius: 8px;
-  overflow: hidden;
-  box-shadow: 0 5px 15px rgba(0,0,0,0.4);
-  transition: transform 0.2s;
-}
-.card img {
-  width: 100%;
-  display: block;
-}
-.card:hover {
-  transform: translateY(-5px);
-}
-/* Clé : film cliquable */
-.card.clickable {
-  cursor: pointer;
-}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FilmStreaming</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
+  <h1 class="title">FilmStreaming</h1>
 
-<header>FilmStreaming - Recommandations</header>
+  <div class="gallery">
+    <!-- Images des films -->
+    <img src="film1.jpg" alt="Film 1" class="film">
+    <img src="film2.jpg" alt="Film 2" class="film">
+    <img src="film3.jpg" alt="Film 3" class="film">
+    <img src="film4.jpg" alt="Film 4" class="film">
+    <img src="film5.jpg" alt="Film 5" class="film">
+    <img src="film6.jpg" alt="Film 6" class="film">
+    <img src="film7.jpg" alt="Film 7" class="film">
+    <img src="film8.jpg" alt="Film 8" class="film">
+    <img src="film9.jpg" alt="Film 9" class="film">
+    <img src="film10.jpg" alt="Film 10" class="film">
+    <img src="film11.jpg" alt="Film 11" class="film">
+    <img src="film12.jpg" alt="Film 12" class="film">
+    <img src="film13.jpg" alt="Film 13" class="film">
+    <img src="film14.jpg" alt="Film 14" class="film">
+    <img src="film15.jpg" alt="Film 15" class="film">
+    <img src="film16.jpg" alt="Film 16" class="film">
+    <img src="film17.jpg" alt="Film 17" class="film">
+    <img src="film18.jpg" alt="Film 18" class="film">
+    <img src="film19.jpg" alt="Film 19" class="film">
+    <img src="film20.jpg" alt="Film 20" class="film">
+    <img src="film21.jpg" alt="Film 21" class="film">
+    <img src="film22.jpg" alt="Film 22" class="film">
+     <!-- Seule image cliquable -->
+    <img src="doodle.jpg" alt="Film spécial" class="film clickable" id="special-film">
+    
+    <img src="film23.jpg" alt="Film 23" class="film">
+    <img src="film24.jpg" alt="Film 24" class="film">
+    <img src="film25.jpg" alt="Film 25" class="film">
+    <img src="film26.jpg" alt="Film 26" class="film">
+    <img src="film27.jpg" alt="Film 27" class="film">
+    <img src="film28.jpg" alt="Film 28" class="film">
+    <img src="film29.jpg" alt="Film 29" class="film">
 
-<main>
-  <div class="card">
-    <img src="thumb-fake1.jpg" alt="Film 1">
+   
   </div>
-  <div class="card">
-    <img src="thumb-fake2.jpg" alt="Film 2">
-  </div>
-  <div class="card clickable" id="myMovie">
-    <img src="thumb-AplusT.jpg" alt="A+T">
-  </div>
-  <div class="card">
-    <img src="thumb-fake3.jpg" alt="Film 3">
-  </div>
-</main>
 
-<script>
-const myMovie = document.getElementById('myMovie');
-myMovie.addEventListener('click', () => {
-  // ouvrir le doodle en plein écran
-  const overlay = document.createElement('div');
-  overlay.style.position = 'fixed';
-  overlay.style.top = 0;
-  overlay.style.left = 0;
-  overlay.style.width = '100vw';
-  overlay.style.height = '100vh';
-  overlay.style.background = 'rgba(0,0,0,0.85)';
-  overlay.style.display = 'flex';
-  overlay.style.alignItems = 'center';
-  overlay.style.justifyContent = 'center';
-  overlay.style.zIndex = 1000;
+  <!-- Vidéo Netflix -->
+  <video id="introVideo" class="hidden" src="intro.mp4"></video>
 
-  const img = document.createElement('img');
-  img.src = 'doodle-full.png';
-  img.style.maxWidth = '90%';
-  img.style.maxHeight = '90%';
-  img.style.borderRadius = '10px';
-  overlay.appendChild(img);
-
-  // clic pour fermer
-  overlay.addEventListener('click', () => document.body.removeChild(overlay));
-  document.body.appendChild(overlay);
-});
-</script>
-
+  <script src="script.js"></script>
 </body>
 </html>
-
